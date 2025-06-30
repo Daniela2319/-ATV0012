@@ -25,7 +25,7 @@ namespace Zuplae.Aulas.Atv0012.Models
 
         public override string ToString()
         {
-            string produto = $"Nome do Produto: {nomeProduto}\n codigo do Produto: {codigoProduto}\n preço: {preco} \n Fornecedores:";
+            string produto = $"Nome do Produto: {nomeProduto}\n codigo do Produto: {codigoProduto}\n preço: {preco}\n Fornecedores:";
             string fornecedoresInfo = "";
 
             foreach (var fornecedor in this.fornecedores)
