@@ -8,10 +8,10 @@ namespace Zuplae.Aulas.Atv0012.Models
 {
     public class Produto
     {
-        public string nomeProduto;
-        public string codigoProduto;
-        public decimal preco;
-        List<Fornecedor> fornecedores = new List<Fornecedor>();
+        private string nomeProduto;
+        private string codigoProduto;
+        private decimal preco;
+        private List<Fornecedor> fornecedores = new List<Fornecedor>();
 
         public Produto() { }
 
@@ -22,6 +22,49 @@ namespace Zuplae.Aulas.Atv0012.Models
             this.preco = preco;
             this.fornecedores.Add(fornecedores);
         }
+
+        public void SetNomeProduto(string nomeProduto)
+        {
+            this.nomeProduto = nomeProduto;
+        }
+
+        public string GetNomeProduto()
+        {
+            return nomeProduto;
+        }
+
+        public void SetCodigoProduto(string codigoProduto)
+        {
+            this.codigoProduto = codigoProduto;
+        }
+
+        public string GetCodigoProduto()
+        {
+            return codigoProduto;
+        }
+
+        public void SetPreco(decimal preco)
+        {
+            this.preco = preco;
+        }
+
+        public decimal GetPreco()
+        {
+            return preco;
+        }
+
+        public void AdicionarFornecedor(Fornecedor fornecedor)
+        {
+            this.fornecedores.Add(fornecedor);
+        }
+
+        public List<Fornecedor> GetFornecedores()
+        {
+            return this.fornecedores;
+        }
+
+
+
 
         public override string ToString()
         {
