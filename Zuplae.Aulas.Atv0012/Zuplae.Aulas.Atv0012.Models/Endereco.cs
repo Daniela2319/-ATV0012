@@ -2,33 +2,39 @@
 {
     public class Endereco
     {
-        private string rua;
+        #region Atributos
+        private string logradouro;
         private string numero;
         private string bairro;
         private string cidade;
         private string estado;
         private string cep;
- 
+        #endregion
+
+        #region Metodos
         public Endereco() { }
 
-        public Endereco(string rua, string numero, string bairro, string cidade, string estado, string cep)
+        public Endereco(string logradouro, string numero, string bairro, string cidade, string estado, string cep)
         {
-            this.rua = rua;
-            this.numero = numero;
-            this.bairro = bairro;
-            this.cidade = cidade;
-            this.estado = estado;
-            this.cep = cep;
+            this.SetLogradouro(logradouro);
+            this.SetNumero(numero);
+            this.SetBairro(bairro);
+            this.SetCidade(cidade);
+            this.SetEstado(estado);
+            this.SetCep(cep);
         }
 
-        public void SetRua(string rua)
+        #endregion
+
+        #region Logradouro, Numero, Bairro, Cidade, Estado, Cep
+        public void SetLogradouro(string rua)
         {
-            this.rua = rua;
+            this.logradouro = rua; 
         }
 
-        public string GetRua()
+        public string GetLogradouro()
         {
-            return rua;
+            return logradouro; 
         }
 
         public void SetNumero(string numero)
@@ -81,10 +87,13 @@
             return cep;
         }
 
+        #endregion
 
+        #region ToString
         public override string ToString()
         {
-            return $"Rua: {rua}, {numero} - {bairro}, {cidade} - {estado}, CEP: {cep}";
+            return $"Rua: {GetLogradouro()}, {GetNumero()} - {GetBairro()}, {GetCidade()} - {GetEstado()}, CEP: {GetCep()}";
         }
+        #endregion
     }
 }

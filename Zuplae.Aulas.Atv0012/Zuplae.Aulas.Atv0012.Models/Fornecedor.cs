@@ -8,19 +8,24 @@ namespace Zuplae.Aulas.Atv0012.Models
 {
     public class Fornecedor
     {
+        #region Atributos
         private string razaoSocial;
         private string cnpj;
         private Endereco endereco;
+        #endregion
 
+        #region Metodos
         public Fornecedor() { }
 
         public Fornecedor(string razaoSocial, string cnpj, Endereco endereco)
         {
-            this.razaoSocial = razaoSocial;
-            this.cnpj = cnpj;
-            this.endereco = endereco;
+            this.SetRazaoSocial (razaoSocial);
+            this.SetCnpj (cnpj);
+            this.SetEndereco (endereco);
         }
+        #endregion
 
+        #region RazaoSocial, Cnpj, Endereco
         public void SetRazaoSocial(string razaoSocial)
         {
             this.razaoSocial = razaoSocial;
@@ -50,11 +55,14 @@ namespace Zuplae.Aulas.Atv0012.Models
         {
             return endereco;
         }
+        #endregion
 
+        #region ToString
         public override string ToString()
         {
-            return $" {razaoSocial}, CNPJ: {cnpj}\n {endereco}";
+            return $" {GetRazaoSocial()}, CNPJ: {GetCnpj()}\n {GetEndereco()}";
         }
+        #endregion
 
     }
 }

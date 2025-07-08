@@ -8,21 +8,26 @@ namespace Zuplae.Aulas.Atv0012.Models
 {
     public class Produto
     {
+        #region Atributos
         private string nomeProduto;
         private string codigoProduto;
         private decimal preco;
         private List<Fornecedor> fornecedores = new List<Fornecedor>();
+        #endregion
 
+        #region Metodos
         public Produto() { }
 
         public Produto(string nomeProduto, string codigoProduto, decimal preco, Fornecedor fornecedores)
         {
-            this.nomeProduto = nomeProduto;
-            this.codigoProduto = codigoProduto;
-            this.preco = preco;
-            this.fornecedores.Add(fornecedores);
+            this.SetNomeProduto (nomeProduto);
+            this.SetCodigoProduto (codigoProduto);
+            this.SetPreco(preco);
+            this.AdicionarFornecedor (fornecedores);
         }
+        #endregion
 
+        #region NomeProduto, CodigoProduto, Preco, Fornecedores
         public void SetNomeProduto(string nomeProduto)
         {
             this.nomeProduto = nomeProduto;
@@ -62,21 +67,21 @@ namespace Zuplae.Aulas.Atv0012.Models
         {
             return this.fornecedores;
         }
+        #endregion
 
-
-
-
+        #region ToString
         public override string ToString()
         {
-            string produto = $"Nome do Produto: {nomeProduto}\n codigo do Produto: {codigoProduto}\n preço: {preco}\n Fornecedores:";
+            string produto = $"Nome do Produto: {GetNomeProduto()}\n codigo do Produto: {GetCodigoProduto()}\n preço: {GetPreco()}\n Fornecedores:";
             string fornecedoresInfo = "";
 
             foreach (var fornecedor in this.fornecedores)
             {
-                fornecedoresInfo += $"{fornecedor}";
+                fornecedoresInfo += fornecedor;
             }
             return produto + fornecedoresInfo;
 
         }
+        #endregion
     }
 }
