@@ -15,32 +15,35 @@ namespace Zuplae.Aulas.Atv0012.Models
         private List<Fornecedor> fornecedores = new List<Fornecedor>();
         #endregion
 
-        #region Metodos
-        public Produto() { }
-
-        public Produto(string nomeProduto, string codigoProduto, decimal preco, Fornecedor fornecedores)
+        #region Contrutores
+        public Produto()
         {
-            this.SetNomeProduto (nomeProduto);
-            this.SetCodigoProduto (codigoProduto);
+            GerarCodigo(); 
+        }
+
+        public Produto(string nomeProduto, decimal preco, Fornecedor fornecedores)
+        {
+            this.SetNomeProduto(nomeProduto);
             this.SetPreco(preco);
-            this.AdicionarFornecedor (fornecedores);
+            this.AdicionarFornecedor(fornecedores);
+
+            GerarCodigo(); 
         }
         #endregion
 
         #region NomeProduto, CodigoProduto, Preco, Fornecedores
         public void SetNomeProduto(string nomeProduto)
         {
+            if (nomeProduto == "" || nomeProduto == null)
+            {
+                throw new Exception("O nome do produto não pode ser vazio ou nulo.");
+            }
             this.nomeProduto = nomeProduto;
         }
 
         public string GetNomeProduto()
         {
-            return nomeProduto;
-        }
-
-        public void SetCodigoProduto(string codigoProduto)
-        {
-            this.codigoProduto = codigoProduto;
+            return nomeProduto.ToUpper();
         }
 
         public string GetCodigoProduto()
@@ -50,6 +53,10 @@ namespace Zuplae.Aulas.Atv0012.Models
 
         public void SetPreco(decimal preco)
         {
+            if (preco < 0 || preco > 100.00m) 
+            {
+                throw new Exception("O preço deve estar entre R$0,00 e R$100.00.");
+            }
             this.preco = preco;
         }
 
@@ -69,7 +76,7 @@ namespace Zuplae.Aulas.Atv0012.Models
         }
         #endregion
 
-        #region ToString
+        #region Metodos
         public override string ToString()
         {
             string produto = $"Nome do Produto: {GetNomeProduto()}\n codigo do Produto: {GetCodigoProduto()}\n preço: {GetPreco()}\n Fornecedores:";
@@ -82,6 +89,15 @@ namespace Zuplae.Aulas.Atv0012.Models
             return produto + fornecedoresInfo;
 
         }
+
+        private void GerarCodigo()
+        {
+            this.codigoProduto = "PV_" + Guid.NewGuid().ToString("N").Substring(0, 8).ToUpper();
+        }
+
         #endregion
+
+
+
     }
 }

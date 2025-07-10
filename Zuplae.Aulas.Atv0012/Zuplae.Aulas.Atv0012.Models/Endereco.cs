@@ -11,7 +11,7 @@
         private string cep;
         #endregion
 
-        #region Metodos
+        #region Construtores
         public Endereco() { }
 
         public Endereco(string logradouro, string numero, string bairro, string cidade, string estado, string cep)
@@ -29,12 +29,12 @@
         #region Logradouro, Numero, Bairro, Cidade, Estado, Cep
         public void SetLogradouro(string rua)
         {
-            this.logradouro = rua; 
+            this.logradouro = rua;
         }
 
         public string GetLogradouro()
         {
-            return logradouro; 
+            return logradouro;
         }
 
         public void SetNumero(string numero)
@@ -64,11 +64,15 @@
 
         public string GetCidade()
         {
-            return cidade;
+            return cidade.ToLower();
         }
 
         public void SetEstado(string estado)
         {
+            if (string.IsNullOrWhiteSpace(estado) || estado.Length != 2)
+            {
+                throw new Exception("Estado inválido. Deve ter 2 caracteres.");
+            }
             this.estado = estado;
         }
 
@@ -79,6 +83,11 @@
 
         public void SetCep(string cep)
         {
+            //validar que valor contenha 8 caracteres e seja numérico
+            if (string.IsNullOrWhiteSpace(cep) || cep.Length != 8 || !long.TryParse(cep, out _))
+            {
+                throw new Exception("CEP inválido. Deve ter 8 caracteres numéricos.");
+            }
             this.cep = cep;
         }
 
@@ -89,11 +98,12 @@
 
         #endregion
 
-        #region ToString
+        #region Metodo
         public override string ToString()
         {
             return $"Rua: {GetLogradouro()}, {GetNumero()} - {GetBairro()}, {GetCidade()} - {GetEstado()}, CEP: {GetCep()}";
         }
         #endregion
-    }
+
+    } 
 }

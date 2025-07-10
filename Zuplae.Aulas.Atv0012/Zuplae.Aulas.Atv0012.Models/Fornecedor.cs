@@ -14,7 +14,7 @@ namespace Zuplae.Aulas.Atv0012.Models
         private Endereco endereco;
         #endregion
 
-        #region Metodos
+        #region Construtor
         public Fornecedor() { }
 
         public Fornecedor(string razaoSocial, string cnpj, Endereco endereco)
@@ -33,11 +33,19 @@ namespace Zuplae.Aulas.Atv0012.Models
 
         public string GetRazaoSocial()
         {
-            return razaoSocial;
+            if (string.IsNullOrWhiteSpace(razaoSocial))
+            {
+                throw new Exception("Razão social não pode ser vazia nem conter apenas espaços.");
+            }
+            return razaoSocial.ToUpper();
         }
 
         public void SetCnpj(string cnpj)
         {
+            //if (string.IsNullOrWhiteSpace(cnpj) || cnpj.Length != 14)
+            //{
+            //    throw new Exception("CNPJ inválido. Deve ter 14 caracteres.");
+            //}
             this.cnpj = cnpj;
         }
 
@@ -57,7 +65,7 @@ namespace Zuplae.Aulas.Atv0012.Models
         }
         #endregion
 
-        #region ToString
+        #region Metodo
         public override string ToString()
         {
             return $" {GetRazaoSocial()}, CNPJ: {GetCnpj()}\n {GetEndereco()}";
