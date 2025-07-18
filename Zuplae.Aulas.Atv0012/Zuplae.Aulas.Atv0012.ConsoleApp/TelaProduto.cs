@@ -79,11 +79,16 @@ namespace Zuplae.Aulas.Atv0012.ConsoleApp
             string cep = Console.ReadLine();
 
             var endereco = enderecoService.Cadastrar(logradouro, numero, bairro, cidade, estado, cep);
+            Endereco enderecoB = enderecoService.ListarPorId(endereco);
 
-            var fornecedor = fornecedorService.Cadastrar(razaoSocial, cnpj, endereco);
+            var fornecedor = fornecedorService.Cadastrar(razaoSocial, cnpj, enderecoB);
+            Fornecedor fornecedorB = fornecedorService.ListarPorId(fornecedor);
 
-            produtoService.Cadastrar(nomeProduto, preco, fornecedor);
-          
+            int idproduto = produtoService.Cadastrar(nomeProduto, preco, fornecedorB);
+
+            Console.WriteLine($"Produto cadastrado com sucesso! ID: {idproduto} - Nome: {nomeProduto} - Fornecedor: {fornecedorB}");
+            
+            
         }
         private void Editar()
         {

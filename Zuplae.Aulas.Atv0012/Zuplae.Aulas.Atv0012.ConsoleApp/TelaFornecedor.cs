@@ -13,92 +13,156 @@ namespace Zuplae.Aulas.Atv0012.ConsoleApp
 {
     internal class TelaFornecedor
     {
-        private FornecedorService fornecedorService = new FornecedorService();
-        private EnderecoService enderecoService = new EnderecoService();
-        
-        public void ExecutarMenu()
-        {
-            Console.Clear();
-            Console.WriteLine("================ Modulo de Fornecedor ======================");
-            Console.WriteLine("Escolha uma das opções do menu abaixo:");
-            Console.WriteLine("\t1 -  Cadastrar");
-            Console.WriteLine("\t2 -  Editar");
-            Console.WriteLine("\t3 -  Listar");
-            Console.WriteLine("\t4 -  Deletar");
-            Console.WriteLine("\t5 -  Voltar ao menu principal");
-            Console.Write("Digite o número da opção desejada: ");
+        #region Atributos
+            private FornecedorService fornecedorService = new FornecedorService();
+            private EnderecoService enderecoService = new EnderecoService();
+        #endregion
 
-            int opcao = Convert.ToInt32(Console.ReadLine());
-            switch (opcao)
+        #region ExecutarMenu
+            public void ExecutarMenu()
             {
-                case 1:
-                    Cadastrar();
-                    break;
-                case 2:
-                    Editar();
-                    break;
-                case 3:
-                    Listar();
-                    break;
-                case 4:
-                    Deletar();
-                    break;
-                case 5:
-                    VoltarAoMenuPrincipal();
-                    return;
-                default:
-                    Console.WriteLine("Opção inválida, tente novamente.");
-                    ExecutarMenu();
-                    break;
+                ExibirMensagem();
+                ExibirMenu();
             }
-        }
-        private void Cadastrar()
-        {
-            Console.WriteLine("Digite Razão Social:");
-            string razaoSocial = Console.ReadLine();
+        #endregion
 
-            Console.WriteLine("Digite CNPJ:");
-            string cnpj = Console.ReadLine();
+        #region Modulo
+            private void ExibirMensagem()
+            {
+                Console.Clear();
+                Console.WriteLine("================ Modulo de Fornecedor ======================");
+                Console.WriteLine("Escolha uma das opções do menu abaixo:");
+                Console.WriteLine("\t1 -  Cadastrar");
+                Console.WriteLine("\t2 -  Editar");
+                Console.WriteLine("\t3 -  Listar");
+                Console.WriteLine("\t4 -  Listar por Id");
+                Console.WriteLine("\t5 -  Deletar");
+                Console.WriteLine("\t6 -  Voltar ao menu principal");
+                Console.Write("Digite o número da opção desejada: ");
+            }
+        #endregion
+
+        #region Menu
+            private void ExibirMenu()
+            {
+                int opcao = Convert.ToInt32(Console.ReadLine());
+                switch (opcao)
+                {
+                    case 1:
+                        Cadastrar();
+                        break;
+                    case 2:
+                        Editar();
+                        break;
+                    case 3:
+                        Listar();
+                        break;
+                    case 4:
+                        ListarPorId();
+                        break;
+                    case 5:
+                        Deletar();
+                        break;
+                    case 6:
+                        VoltarAoMenuPrincipal();
+                        return;
+                    default:
+                        Console.WriteLine("Opção inválida, tente novamente.");
+                        ExecutarMenu();
+                        break;
+                }
+            }
+        #endregion
+
+        #region VoltarAoMenu
+            private void VoltarAoMenuPrincipal()
+            {
+                Console.WriteLine("Voltando ao menu principal...");
+                Console.ReadKey();
+                ExecutarMenu();
+            }
+        #endregion
+
+        #region Cadastrar
+            private void Cadastrar()
+            {
+                Console.WriteLine("Digite Razão Social:");
+                string razaoSocial = Console.ReadLine();
+
+                Console.WriteLine("Digite CNPJ:");
+                string cnpj = Console.ReadLine();
 
 
-            Console.WriteLine("Digite Logradouro:");
-            string logradouro = Console.ReadLine();
+                Console.WriteLine("Digite Logradouro:");
+                string logradouro = Console.ReadLine();
 
-            Console.WriteLine("Digite Número:");
-            string numero = Console.ReadLine();
+                Console.WriteLine("Digite Número:");
+                string numero = Console.ReadLine();
 
-            Console.WriteLine("Digite Bairro:");
-            string bairro = Console.ReadLine();
+                Console.WriteLine("Digite Bairro:");
+                string bairro = Console.ReadLine();
 
-            Console.WriteLine("Digite Cidade:");
-            string cidade = Console.ReadLine();
+                Console.WriteLine("Digite Cidade:");
+                string cidade = Console.ReadLine();
 
-            Console.WriteLine("Digite Estado:");
-            string estado = Console.ReadLine();
+                Console.WriteLine("Digite Estado:");
+                string estado = Console.ReadLine();
 
-            Console.WriteLine("Digite CEP:");
-            string cep = Console.ReadLine();
+                Console.WriteLine("Digite CEP:");
+                string cep = Console.ReadLine();
 
-            var endereco = enderecoService.Cadastrar(logradouro, numero, bairro, cidade, estado, cep);
+                var endereco = enderecoService.Cadastrar(logradouro, numero, bairro, cidade, estado, cep);
+                Endereco enderecoB = enderecoService.ListarPorId(endereco);
 
-            fornecedorService.Cadastrar(razaoSocial, cnpj, endereco);
+                int idFornecedor = fornecedorService.Cadastrar(razaoSocial, cnpj, enderecoB);
 
-        }
-        private void Editar()
+                Console.WriteLine($"Fornecedor Cadastrado ID :{idFornecedor} - Endereço: {enderecoB}");
+
+            }
+        #endregion
+
+        #region Editar
+            private void Editar()
         {
             // Implementar lógica de edição
         }
-        private void Listar()
+        #endregion
+
+        #region Listar
+            private void Listar()
+            {
+                // Implementar lógica de listagem
+            }
+        #endregion
+
+        #region ListarPorId
+        private void ListarPorId()
         {
-            // Implementar lógica de listagem
+            Console.WriteLine("Digite o ID do endereço que deseja listar:");
+            int id = Convert.ToInt32(Console.ReadLine());
+            fornecedorService.ListarPorId(id);
+            BuscarEnderecoId(id);
         }
+        #endregion
+
+        #region Deletar
         private void Deletar()
+            {
+                // Implementar lógica de deleção
+            }
+        #endregion
+
+        #region BuscarEnderecoId
+        private Endereco BuscarEnderecoId(int id)
         {
-            // Implementar lógica de deleção
+            Endereco endereco = enderecoService.ListarPorId(id);
+            if (endereco == null)
+            {
+                Console.WriteLine("Endereço não encontrado.");
+                return null;
+            }
+            return endereco;
         }
-        private void VoltarAoMenuPrincipal()
-        {
-            // Implementar lógica para voltar ao menu principal
-        }
+        #endregion
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Zuplae.Aulas.Atv0012.Models
 {
-    public class Produto
+    public class Produto : BaseModel
     {
         #region Atributos
         private string nomeProduto;
