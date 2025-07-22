@@ -92,31 +92,19 @@ namespace Zuplae.Aulas.Atv0012.ConsoleApp
                 Console.WriteLine("Digite CNPJ:");
                 string cnpj = Console.ReadLine();
 
+                Console.WriteLine("\nDigite o ID do Endereço:");
+                int idEndereco = Convert.ToInt32(Console.ReadLine());
+                var enderecoSelecionado = enderecoService.ListarPorId(idEndereco);
+                if (enderecoSelecionado == null)
+                {
+                    Console.WriteLine("Endereço não encontrado. Por favor, cadastre um endereço primeiro.");
+                    return;
+                }
 
-                Console.WriteLine("Digite Logradouro:");
-                string logradouro = Console.ReadLine();
+                int idFornecedor = fornecedorService.Cadastrar(razaoSocial, cnpj, enderecoSelecionado);
 
-                Console.WriteLine("Digite Número:");
-                string numero = Console.ReadLine();
-
-                Console.WriteLine("Digite Bairro:");
-                string bairro = Console.ReadLine();
-
-                Console.WriteLine("Digite Cidade:");
-                string cidade = Console.ReadLine();
-
-                Console.WriteLine("Digite Estado:");
-                string estado = Console.ReadLine();
-
-                Console.WriteLine("Digite CEP:");
-                string cep = Console.ReadLine();
-
-                var endereco = enderecoService.Cadastrar(logradouro, numero, bairro, cidade, estado, cep);
-                Endereco enderecoB = enderecoService.ListarPorId(endereco);
-
-                int idFornecedor = fornecedorService.Cadastrar(razaoSocial, cnpj, enderecoB);
-
-                Console.WriteLine($"Fornecedor Cadastrado ID :{idFornecedor} - Endereço: {enderecoB}");
+                Console.WriteLine($"\nFornecedor cadastrado com sucesso!\nID: {idFornecedor}" +
+                $" - Razão Social: {razaoSocial} - CNPJ: {cnpj} - Endereço: {enderecoSelecionado}");
 
             }
         #endregion
@@ -138,7 +126,7 @@ namespace Zuplae.Aulas.Atv0012.ConsoleApp
         #region ListarPorId
         private void ListarPorId()
         {
-            Console.WriteLine("Digite o ID do endereço que deseja listar:");
+            Console.WriteLine("Digite o ID do Fornecedor que deseja listar:");
             int id = Convert.ToInt32(Console.ReadLine());
             fornecedorService.ListarPorId(id);
             BuscarEnderecoId(id);

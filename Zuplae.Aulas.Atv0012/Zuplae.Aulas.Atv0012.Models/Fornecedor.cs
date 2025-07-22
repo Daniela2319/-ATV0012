@@ -42,10 +42,7 @@ namespace Zuplae.Aulas.Atv0012.Models
 
         public void SetCnpj(string cnpj)
         {
-            //if (string.IsNullOrWhiteSpace(cnpj) || cnpj.Length != 14)
-            //{
-            //    throw new Exception("CNPJ inválido. Deve ter 14 caracteres.");
-            //}
+           
             this.cnpj = cnpj;
         }
 

@@ -7,39 +7,88 @@ using Zuplae.Aulas.Atv0012.Models;
 
 namespace Zuplae.Aulas.Atv0012.Servics
 {
-    public class ProdutoService
+    public class ProdutoService : IProdutoService
     {
-        
-        private static List<Produto> produtos = new List<Produto>();
-        public int Cadastrar(string nomeProduto, decimal preco, Fornecedor fornecedor)
-        {
-            Produto produto = new Produto();
-            produto.SetNomeProduto(nomeProduto);
-            produto.SetPreco(preco);
-            produto.AdicionarFornecedor(fornecedor);
-            produtos.Add(produto);
+        #region Atributos
+            private static List<Produto> produtos = new List<Produto>();
+            private Produto produto = new Produto();
+        #endregion
 
-            int id = produto.GetId();
-            return id;
-        }
-        public void Editar()
-        {
-            Console.WriteLine("Editar produto (funcionalidade não implementada)");
-        }
-        public void Listar()
-        {
-            Console.WriteLine("Listar produtos (funcionalidade não implementada)");
-        }
+        #region Cadastrar
+            public int Cadastrar(string nomeProduto, decimal preco, Fornecedor fornecedor)
+            {
+                
+                this.produto = CriarProduto(nomeProduto, preco, fornecedor);
+                produtos.Add(this.produto);
+                int id = this.produto.GetId();
+                return id;
+            }
+        #endregion
+
+        #region Editar
+            public bool Editar(int id, string nomeProduto, decimal preco, Fornecedor fornecedor)
+            {  
+                this.produto = ListarPorId(id);
+                if (this.produto != null)
+                {
+                    CriarProduto(nomeProduto, preco, fornecedor);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        #endregion
+
+        #region Listar
+            public List<Produto> Listar()
+            {
+                return produtos;
+            }
+        #endregion
+
+        #region ListarPorId
         public Produto ListarPorId(int id)
         {
-            Produto produto = produtos.Find(p => p.GetId() == id);
-            return produto;
+            this.produto = ObterProdutoPorId(id);
+            return this.produto;
         }
-        public void Deletar()
-        {
-            Console.WriteLine("Deletar produto (funcionalidade não implementada)");
-        }
+        #endregion
 
-       
+        #region Deletar
+        public bool Deletar(int id)
+        {
+            this.produto = this.ListarPorId(id);
+            if (this.produto != null)
+            {
+                produtos.Remove(this.produto);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        #endregion
+
+        #region Metodos Auxiliares
+            private Produto ObterProdutoPorId(int id)
+            {
+                return produtos.FirstOrDefault(p => p.GetId() == id);
+            }
+
+            private Produto CriarProduto(string nomeProduto, decimal preco, Fornecedor fornecedor)
+            {
+                Produto produto = new Produto();
+                produto.SetNomeProduto(nomeProduto);
+                produto.SetPreco(preco);
+                produto.AdicionarFornecedor(fornecedor);
+                return produto;
+            }
+
+        #endregion
+
+
     }
 }

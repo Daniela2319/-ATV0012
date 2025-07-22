@@ -7,54 +7,88 @@ using Zuplae.Aulas.Atv0012.Models;
 
 namespace Zuplae.Aulas.Atv0012.Servics
 {
-    public class FornecedorService 
+    public class FornecedorService : IFornecedorService
     {
         #region Atributos
             private static List<Fornecedor> fornecedores = new List<Fornecedor>();
+            private Fornecedor fornecedor = new Fornecedor();
         #endregion
 
         #region Cadastrar
-            public int Cadastrar(string razaoSocial, string cnpj, Endereco endereco) 
+            public int Cadastrar(string razaoSocial, string cnpj, Endereco endereco)
             {
-                Fornecedor fornecedor = new Fornecedor();
-                fornecedor.SetRazaoSocial(razaoSocial);
-                fornecedor.SetCnpj(cnpj);
-                fornecedor.SetEndereco(endereco);
-                fornecedores.Add(fornecedor);
-                fornecedor.GetId();
 
-                int id = fornecedor.GetId();
+                this.fornecedor = CriarFornecedor(razaoSocial, cnpj, endereco);
+                fornecedores.Add(this.fornecedor);
+                int id = this.fornecedor.GetId();
                 return id;
             }
         #endregion
 
         #region Editar
-            public void Editar()
+            public bool Editar(int id, string razaoSocial, string cnpj, Endereco endereco)
             {
-                // Implementar lógica de edição
+                this.fornecedor = this.ListarPorId(id);
+                if (this.fornecedor != null)
+                {
+                    this.CriarFornecedor(razaoSocial, cnpj, endereco);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
             }
         #endregion
 
         #region Listar
-            public void Listar()
+            public List<Fornecedor> Listar()
             {
-                // Implementar lógica de listagem
+                return fornecedores;
             }
         #endregion
 
         #region ListarPorId
             public Fornecedor ListarPorId(int id)
             {
-                Fornecedor fornecedor = fornecedores.Find(f => f.GetId() == id);
-                return fornecedor;
+                this.fornecedor = ObterFornecedorPorId(id);
+                return this.fornecedor;
             }
         #endregion
 
         #region Deletar
-            public void Deletar()
+            public bool Deletar(int id)
             {
-                // Implementar lógica de deleção
+                this.fornecedor = this.ListarPorId(id);
+                if (this.fornecedor != null)
+                {
+                    fornecedores.Remove(this.fornecedor);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         #endregion
+
+        #region Metodos Auxiliares
+
+            private Fornecedor ObterFornecedorPorId(int id)
+            {
+                return fornecedores.Find(f => f.GetId() == id);
+            }
+            private Fornecedor CriarFornecedor(string razaoSocial, string cnpj, Endereco endereco)
+            {
+                this.fornecedor.SetRazaoSocial(razaoSocial);
+                this.fornecedor.SetCnpj(cnpj);
+                this.fornecedor.SetEndereco(endereco);
+                return this.fornecedor;
+            }
+        #endregion
+
+
+
     }
 }

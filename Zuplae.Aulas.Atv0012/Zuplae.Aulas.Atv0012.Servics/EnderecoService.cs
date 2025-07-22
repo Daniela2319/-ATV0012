@@ -2,53 +2,91 @@
 
 namespace Zuplae.Aulas.Atv0012.Servics
 {
-    public class EnderecoService 
+    public class EnderecoService : IEnderecoService
     {
         #region Propriedades
             private static List<Endereco> enderecos = new List<Endereco>();
+            private Endereco endereco = new Endereco();
         #endregion
 
         #region Cadastrar
             public int Cadastrar(string logradouro, string numero, string bairro, string cidade, string estado, string cep)
             {
-                Endereco endereco = new Endereco();
-                endereco.SetLogradouro(logradouro);
-                endereco.SetNumero(numero);
-                endereco.SetBairro(bairro);
-                endereco.SetCidade(cidade);
-                endereco.SetEstado(estado);
-                endereco.SetCep(cep);
-                enderecos.Add(endereco);
-
-                int id = endereco.GetId();
+                this.endereco = CriarEndereco(logradouro, numero, bairro, cidade, estado, cep);
+                enderecos.Add(this.endereco);
+                int id = this.endereco.GetId();
                 return id;
+
+
             }
         #endregion
 
         #region Editar
-            public void Editar()
+            public bool Editar(int id, string logradouro, string numero, string bairro, string cidade, string estado, string cep)
             {
+                this.endereco = this.ObterEnderecoPorId(id);
+                if (this.endereco != null)
+                {
+                    CriarEndereco(logradouro, numero, bairro, cidade, estado, cep);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            
             }
         #endregion
 
         #region Listar
-            public void Listar()
-            {  
+            public List<Endereco> Listar()
+            {
+                return enderecos;
             }
         #endregion
 
         #region ListarPorId
             public Endereco ListarPorId(int id) 
             {
-               Endereco end = enderecos.Find(e => e.GetId() == id);
-               return end;
+                this.endereco = this.ObterEnderecoPorId(id);
+                return this.endereco;
             }
         #endregion
 
         #region Deletar
-            public void Deletar(int id)
+            public bool Deletar(int id)
             {
+                this.endereco = this.ListarPorId(id);
+                if (this.endereco != null)
+                {
+                    enderecos.Remove(this.endereco);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
+        #endregion
+
+        #region Metodos Auxiliares
+            private Endereco ObterEnderecoPorId(int id)
+            {
+                return enderecos.FirstOrDefault(e => e.GetId() == id);
+            }
+
+            private Endereco CriarEndereco(string logradouro, string numero, string bairro, string cidade, string estado, string cep)
+            {
+                this.endereco.SetLogradouro(logradouro);
+                this.endereco.SetNumero(numero);
+                this.endereco.SetBairro(bairro);
+                this.endereco.SetCidade(cidade);
+                this.endereco.SetEstado(estado);
+                this.endereco.SetCep(cep);
+                return this.endereco;
+            }
+
+       
         #endregion
     }
 }
