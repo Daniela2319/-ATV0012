@@ -3,7 +3,7 @@
     public class Endereco : BaseModel
     {
         #region Atributos
-        private string logradouro;
+        public string logradouro;
         private string numero;
         private string bairro;
         private string cidade;
