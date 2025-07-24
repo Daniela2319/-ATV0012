@@ -77,12 +77,12 @@ namespace Zuplae.Aulas.Atv0012.Servics
 
             private Endereco CriarEndereco(string logradouro, string numero, string bairro, string cidade, string estado, string cep)
             {
-                this.endereco.SetLogradouro(logradouro);
-                this.endereco.SetNumero(numero);
-                this.endereco.SetBairro(bairro);
-                this.endereco.SetCidade(cidade);
-                this.endereco.SetEstado(estado);
-                this.endereco.SetCep(cep);
+                this.endereco.Logradouro = logradouro;
+                this.endereco.Numero = numero;
+                this.endereco.Bairro = bairro;
+                this.endereco.Cidade = cidade;
+                this.endereco.Estado = estado;
+                this.endereco.Cep = cep;
                 return this.endereco;
             }
 

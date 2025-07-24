@@ -81,9 +81,9 @@ namespace Zuplae.Aulas.Atv0012.Servics
             }
             private Fornecedor CriarFornecedor(string razaoSocial, string cnpj, Endereco endereco)
             {
-                this.fornecedor.SetRazaoSocial(razaoSocial);
-                this.fornecedor.SetCnpj(cnpj);
-                this.fornecedor.SetEndereco(endereco);
+                this.fornecedor.RazaoSocial = razaoSocial;
+                this.fornecedor.CNPJ = cnpj;
+                this.fornecedor.Endereco = endereco;
                 return this.fornecedor;
             }
         #endregion

@@ -81,9 +81,9 @@ namespace Zuplae.Aulas.Atv0012.Servics
             private Produto CriarProduto(string nomeProduto, decimal preco, Fornecedor fornecedor)
             {
                 Produto produto = new Produto();
-                produto.SetNomeProduto(nomeProduto);
-                produto.SetPreco(preco);
-                produto.AdicionarFornecedor(fornecedor);
+                produto.NomeProduto = nomeProduto;
+                produto.Preco = preco;
+                produto.Fornecedores.Add(fornecedor);
                 return produto;
             }
 

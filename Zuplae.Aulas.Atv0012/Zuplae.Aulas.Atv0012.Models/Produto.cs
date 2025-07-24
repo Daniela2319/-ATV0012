@@ -8,11 +8,42 @@ namespace Zuplae.Aulas.Atv0012.Models
 {
     public class Produto : BaseModel
     {
-        #region Atributos
-        private string nomeProduto;
-        private string codigoProduto;
-        private decimal preco;
-        private List<Fornecedor> fornecedores = new List<Fornecedor>();
+        #region Propriedades
+        private string _nomeProduto;
+        public string NomeProduto { 
+            get
+            {
+                return _nomeProduto.ToUpper();
+            }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new Exception("O nome do produto não pode ser vazio ou conter apenas espaços.");
+                }
+                _nomeProduto = value;
+            }
+        }
+
+        public string CodigoProduto { get; private set; }
+        
+        private decimal _preco;
+        public decimal Preco { 
+            get
+            {
+                return _preco;
+            }
+            set
+            {
+                if (value < 0 || value > 100.00m)
+                {
+                    throw new Exception("O preço deve estar entre R$0,00 e R$100.00.");
+                }
+                _preco = value;
+            }
+        }
+        public List<Fornecedor> Fornecedores { get; set; }
+        
         #endregion
 
         #region Contrutores
@@ -21,78 +52,27 @@ namespace Zuplae.Aulas.Atv0012.Models
             GerarCodigo(); 
         }
 
-        public Produto(string nomeProduto, decimal preco, Fornecedor fornecedores)
+        public Produto(string nomeProduto, decimal preco, Fornecedor fornecedor)
         {
-            this.SetNomeProduto(nomeProduto);
-            this.SetPreco(preco);
-            this.AdicionarFornecedor(fornecedores);
+            this.NomeProduto = nomeProduto;
+            this.Preco = preco;
+            this.Fornecedores.Add(fornecedor);
 
             GerarCodigo(); 
         }
         #endregion
-
-        #region NomeProduto, CodigoProduto, Preco, Fornecedores
-        public void SetNomeProduto(string nomeProduto)
-        {
-            if (nomeProduto == "" || nomeProduto == null)
-            {
-                throw new Exception("O nome do produto não pode ser vazio ou nulo.");
-            }
-            this.nomeProduto = nomeProduto;
-        }
-
-        public string GetNomeProduto()
-        {
-            return nomeProduto.ToUpper();
-        }
-
-        public string GetCodigoProduto()
-        {
-            return codigoProduto;
-        }
-
-        public void SetPreco(decimal preco)
-        {
-            if (preco < 0 || preco > 100.00m) 
-            {
-                throw new Exception("O preço deve estar entre R$0,00 e R$100.00.");
-            }
-            this.preco = preco;
-        }
-
-        public decimal GetPreco()
-        {
-            return preco;
-        }
-
-        public void AdicionarFornecedor(Fornecedor fornecedor)
-        {
-            this.fornecedores.Add(fornecedor);
-        }
-
-        public List<Fornecedor> GetFornecedores()
-        {
-            return this.fornecedores;
-        }
-        #endregion
+ 
 
         #region Metodos
         public override string ToString()
         {
-            string produto = $"Nome do Produto: {GetNomeProduto()}\n codigo do Produto: {GetCodigoProduto()}\n preço: {GetPreco()}\n Fornecedores:";
-            string fornecedoresInfo = "";
-
-            foreach (var fornecedor in this.fornecedores)
-            {
-                fornecedoresInfo += fornecedor;
-            }
-            return produto + fornecedoresInfo;
-
+            return $"Nome do Produto: {NomeProduto}\n codigo do Produto: {CodigoProduto}\n preço: {Preco}\n Fornecedores:";
+           
         }
 
         private void GerarCodigo()
         {
-            this.codigoProduto = "PV_" + Guid.NewGuid().ToString("N").Substring(0, 8).ToUpper();
+            this.CodigoProduto = "PV_" + Guid.NewGuid().ToString("N").Substring(0, 8).ToUpper();
         }
 
         #endregion

@@ -8,10 +8,23 @@ namespace Zuplae.Aulas.Atv0012.Models
 {
     public class Fornecedor : BaseModel
     {
-        #region Atributos
-        private string razaoSocial;
-        private string cnpj;
-        private Endereco endereco;
+        #region Propriedades
+        private string _razaoSocial;
+        public string RazaoSocial { 
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_razaoSocial))
+                {
+                    throw new Exception("Razão social não pode ser vazia nem conter apenas espaços.");
+                }
+                return _razaoSocial.ToUpper();
+            } 
+            set { _razaoSocial = value; } 
+        }
+
+        public string CNPJ { get; set; }
+        public Endereco Endereco { get; set; }
+        
         #endregion
 
         #region Construtor
@@ -19,53 +32,16 @@ namespace Zuplae.Aulas.Atv0012.Models
 
         public Fornecedor(string razaoSocial, string cnpj, Endereco endereco)
         {
-            this.SetRazaoSocial (razaoSocial);
-            this.SetCnpj (cnpj);
-            this.SetEndereco (endereco);
-        }
-        #endregion
-
-        #region RazaoSocial, Cnpj, Endereco
-        public void SetRazaoSocial(string razaoSocial)
-        {
-            this.razaoSocial = razaoSocial;
-        }
-
-        public string GetRazaoSocial()
-        {
-            if (string.IsNullOrWhiteSpace(razaoSocial))
-            {
-                throw new Exception("Razão social não pode ser vazia nem conter apenas espaços.");
-            }
-            return razaoSocial.ToUpper();
-        }
-
-        public void SetCnpj(string cnpj)
-        {
-           
-            this.cnpj = cnpj;
-        }
-
-        public string GetCnpj()
-        {
-            return cnpj;
-        }
-
-        public void SetEndereco(Endereco endereco)
-        {
-            this.endereco = endereco;
-        }
-
-        public Endereco GetEndereco()
-        {
-            return endereco;
+            this.RazaoSocial = razaoSocial;
+            this.CNPJ = cnpj;
+            this.Endereco = endereco;
         }
         #endregion
 
         #region Metodo
         public override string ToString()
         {
-            return $" {GetRazaoSocial()}, CNPJ: {GetCnpj()}\n {GetEndereco()}";
+            return $" {RazaoSocial}, CNPJ: {CNPJ}\n {Endereco}";
         }
         #endregion
 
