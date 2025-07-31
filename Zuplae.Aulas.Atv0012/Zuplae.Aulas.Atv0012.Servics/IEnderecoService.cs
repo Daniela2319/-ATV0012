@@ -14,5 +14,6 @@ namespace Zuplae.Aulas.Atv0012.Servics
         List<Endereco> Listar();
         Endereco ListarPorId(int id);
         bool Deletar(int id);
+     
     }
 }

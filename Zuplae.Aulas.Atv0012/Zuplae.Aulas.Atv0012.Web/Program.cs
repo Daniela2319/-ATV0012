@@ -1,7 +1,12 @@
+using Zuplae.Aulas.Atv0012.Servics;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Services
+builder.Services.AddScoped<IEnderecoService, EnderecoService>();
 
 var app = builder.Build();
 

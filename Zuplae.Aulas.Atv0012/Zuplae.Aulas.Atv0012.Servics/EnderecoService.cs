@@ -85,8 +85,6 @@ namespace Zuplae.Aulas.Atv0012.Servics
                 this.endereco.Cep = cep;
                 return this.endereco;
             }
-
-       
         #endregion
     }
 }
