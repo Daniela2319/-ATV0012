@@ -10,39 +10,27 @@ namespace Zuplae.Aulas.Atv0012.Models
     {
         #region Propriedades
         private string _nomeProduto;
-        public string NomeProduto { 
-            get
-            {
-                return _nomeProduto.ToUpper();
-            }
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    throw new Exception("O nome do produto não pode ser vazio ou conter apenas espaços.");
-                }
-                _nomeProduto = value;
-            }
-        }
+        public string NomeProduto { get; set; }
 
         public string CodigoProduto { get; private set; }
         
-        private decimal _preco;
-        public decimal Preco { 
-            get
-            {
-                return _preco;
-            }
-            set
-            {
-                if (value < 0 || value > 100.00m)
-                {
-                    throw new Exception("O preço deve estar entre R$0,00 e R$100.00.");
-                }
-                _preco = value;
-            }
-        }
-        public List<Fornecedor> Fornecedores { get; set; }
+        //private decimal _preco;
+        //public decimal Preco { 
+        //    get
+        //    {
+        //        return _preco;
+        //    }
+        //    set
+        //    {
+        //        if (value < 0 || value > 100.00m)
+        //        {
+        //            throw new Exception("O preço deve estar entre R$0,00 e R$100.00.");
+        //        }
+        //        _preco = value;
+        //    }
+        //}
+        public decimal Preco { get; set; }
+        public Fornecedor Fornecedor { get; set; }
         
         #endregion
 
@@ -56,7 +44,7 @@ namespace Zuplae.Aulas.Atv0012.Models
         {
             this.NomeProduto = nomeProduto;
             this.Preco = preco;
-            this.Fornecedores.Add(fornecedor);
+            this.Fornecedor = fornecedor;
 
             GerarCodigo(); 
         }

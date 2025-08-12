@@ -7,24 +7,16 @@ using System.Threading.Tasks;
 namespace Zuplae.Aulas.Atv0012.Models
 {
     public class BaseModel
+    {
+        private static int contadorId = 0; // começa em 1 (evita id = 0)
 
-    {   
-        #region Atributos
-          private static int id = 0;
-        #endregion
+        public int Id { get; set; } // cada instância terá seu próprio Id
 
-        #region Id
-        public int GetId()
-        {
-            return id;
-        }
-        #endregion
-
-        #region Construtor
         public BaseModel()
         {
-            id++;
+            contadorId++;
+            Id = contadorId;
         }
-        #endregion
     }
+
 }

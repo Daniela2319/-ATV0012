@@ -97,9 +97,17 @@ namespace Zuplae.Aulas.Atv0012.ConsoleApp
             string estado = Console.ReadLine();
             Console.WriteLine("Digite CEP:");
             string cep = Console.ReadLine();
-
-            int idendereco = enderecoService.Cadastrar(logradouro, numero, bairro, cidade, estado, cep);
-            Console.WriteLine($"Endereço Cadastrado ID : {idendereco} - Rua {logradouro} - N°: {numero}");
+            Endereco endereco = new Endereco
+            {
+                Logradouro = logradouro,
+                Numero = numero,
+                Bairro = bairro,
+                Cidade = cidade,
+                Estado = estado,
+                Cep = cep
+            };
+            enderecoService.Cadastrar(endereco);
+            
 
         }
         #endregion

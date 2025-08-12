@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 // Services
-builder.Services.AddScoped<IEnderecoService, EnderecoService>();
+builder.Services.AddScoped<EnderecoService>();
 
 var app = builder.Build();
 

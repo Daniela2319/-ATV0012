@@ -14,8 +14,8 @@ namespace Zuplae.Aulas.Atv0012.ConsoleApp
     internal class TelaFornecedor
     {
         #region Atributos
-            private FornecedorService fornecedorService = new FornecedorService();
-            private EnderecoService enderecoService = new EnderecoService();
+        private EnderecoService enderecoService = new EnderecoService();
+        private FornecedorService fornecedorService = new FornecedorService();
         #endregion
 
         #region ExecutarMenu
@@ -95,13 +95,20 @@ namespace Zuplae.Aulas.Atv0012.ConsoleApp
                 Console.WriteLine("\nDigite o ID do Endereço:");
                 int idEndereco = Convert.ToInt32(Console.ReadLine());
                 var enderecoSelecionado = enderecoService.ListarPorId(idEndereco);
-                if (enderecoSelecionado == null)
+                 if (enderecoSelecionado == null)
                 {
-                    Console.WriteLine("Endereço não encontrado. Por favor, cadastre um endereço primeiro.");
-                    return;
+                Console.WriteLine("Endereço não encontrado. Por favor, cadastre um endereço primeiro.");
+                return;
                 }
 
-                int idFornecedor = fornecedorService.Cadastrar(razaoSocial, cnpj, enderecoSelecionado);
+                Fornecedor fornecedor = new Fornecedor
+                {
+                    RazaoSocial = razaoSocial,
+                    CNPJ = cnpj,
+                    Endereco = enderecoSelecionado
+                };
+
+                int idFornecedor = fornecedorService.Cadastrar(fornecedor);
 
                 Console.WriteLine($"\nFornecedor cadastrado com sucesso!\nID: {idFornecedor}" +
                 $" - Razão Social: {razaoSocial} - CNPJ: {cnpj} - Endereço: {enderecoSelecionado}");

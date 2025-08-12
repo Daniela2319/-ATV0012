@@ -104,7 +104,14 @@ namespace Zuplae.Aulas.Atv0012.ConsoleApp
                 return;
             }
 
-            int idProduto = produtoService.Cadastrar(nomeProduto, preco, fornSelecionado);
+            Produto produto = new Produto
+            {
+                NomeProduto = nomeProduto,
+                Preco = preco,
+                Fornecedores = new List<Fornecedor> { fornSelecionado }
+            };
+
+            int idProduto = produtoService.Cadastrar(produto);
 
             Console.WriteLine($"\nProduto cadastrado com sucesso!");
             Console.WriteLine($"ID: {idProduto} - Nome: {nomeProduto} - Preço: R${preco:F2} - Fornecedor: {fornSelecionado}");

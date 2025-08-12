@@ -1,16 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Zuplae.Aulas.Atv0012.Models;
 using Zuplae.Aulas.Atv0012.Servics;
 
 namespace Zuplae.Aulas.Atv0012.Web.Controllers
 {
     public class EnderecoController : Controller
     {
-        private readonly IEnderecoService _enderecoService;
-
-        public EnderecoController(IEnderecoService enderecoService)
-        {
-            _enderecoService = enderecoService;
-        }
+        private EnderecoService _enderecoService = new EnderecoService();
 
         public IActionResult Index()
         {
@@ -25,9 +21,9 @@ namespace Zuplae.Aulas.Atv0012.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(string logradouro, string numero, string bairro, string cidade, string estado, string cep)
+        public IActionResult Create(Endereco model) // Auto Binding do Model
         {
-            var endereco = _enderecoService.Cadastrar(logradouro, numero, bairro, cidade, estado, cep);
+            var id = _enderecoService.Cadastrar(model);
             return RedirectToAction("List");
         }
         [HttpGet]
@@ -37,6 +33,24 @@ namespace Zuplae.Aulas.Atv0012.Web.Controllers
             return View(enderecos);
         }
 
-        public IActionResult Update();
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            Endereco model = _enderecoService.ListarPorId(id);
+            return View(model);
+        }
+
+        public IActionResult Edit(Endereco model)
+        {
+             bool editado = _enderecoService.Editar(model);
+             return RedirectToAction("List");
+            
+        }
+
+        public IActionResult Delete(int id)
+        {
+             _enderecoService.Deletar(id);
+            return RedirectToAction("List");
+        }
     }
 }
